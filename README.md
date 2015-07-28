@@ -1,7 +1,8 @@
 # docker_registry_cli
-Docker Registry CLI - Supports Search function via Catalog API in the new version of Docker Registry v2. 
 
-To use, run the latest Docker Registry Distribution from https://github.com/docker/distribution
+Docker Registry CLI - Currently ONLY Supports the Search capability via Catalog API in the new version of Docker Registry v2. 
+
+To use, run the latest Docker Registry Distribution from https://github.com/docker/distribution. The CLI uses the Catalog API available through /v2/_catalog in the new development version of Docker Registry.
 
 **Usage:-**
 
