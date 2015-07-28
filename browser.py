@@ -48,6 +48,17 @@ def get_all_repo_dict(url, repo_array):
 
  	return repo_dict
 
+
+def decorate_list(repo_dict):
+	decorated_list_values = {}
+ 	for repo_key in repo_dict:
+ 		print "Name: "+ repo_key
+ 		print "Tags: "
+
+ 		for tag in repo_dict[repo_key]:
+ 			print tag
+ 		
+
 if __name__ == "__main__":
 	len_sys_argv = len(sys.argv[1:])
 
@@ -57,10 +68,12 @@ if __name__ == "__main__":
 		regurl = sys.argv[1:][0]
 		keyword = sys.argv[1:][1]
 		repo_to_search = sys.argv[1:][2]
+
 		if keyword=="search":
 			search_for_repo(regurl, repo_to_search)
 		elif keyword=="list":
-			get_all_repo_dict(regurl, get_all_repos(regurl))
+			list_all = get_all_repo_dict(regurl, get_all_repos(regurl))
+			print decorate_list(list_all)
 		else:
 			print "Usage: browser.py <registry_endpoint> <keyword> <values> \n valid keywords : search, list, gettag"
 
