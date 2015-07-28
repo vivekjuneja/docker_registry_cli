@@ -13,8 +13,6 @@ def get_all_repos(url):
 
 def search_for_repo(url, repo_search_name) :
 
-	is_repo_full_name_found = True;
-
 	repo_array = get_all_repos(url);
 
 	if repo_search_name in repo_array:
@@ -28,9 +26,6 @@ def search_for_repo(url, repo_search_name) :
 			for key in repo_dict:
 				if(key.startswith(repo_search_name)):
 					print key + " : " + str(get_tags_for_repo(url, key))
-
-		'''print repo_search_name + " not available "
-		is_repo_full_name_found = False;'''
 
 
 def get_tags_for_repo(url, repo):
@@ -50,20 +45,24 @@ def get_all_repo_dict(url, repo_array):
 
 
 def decorate_list(repo_dict):
-	decorated_list_values = {}
+	decorated_list_values = ""
  	for repo_key in repo_dict:
- 		print "Name: "+ repo_key
- 		print "Tags: "
+ 		decorated_list_values =  "Name: " + repo_key
+ 		decorated_list_values += "\nTags: "
 
  		for tag in repo_dict[repo_key]:
- 			print tag
- 		
+ 			decorated_list_values += tag + '\t'
+ 	
+ 	return decorated_list_values
+
+def usage():
+ 	return "Usage: browser.py <registry_endpoint> <keyword> <values> \n valid keywords : search, list, gettag"
 
 if __name__ == "__main__":
 	len_sys_argv = len(sys.argv[1:])
 
 	if len_sys_argv < 3:
-		print "Usage: browser.py <registry_endpoint> <keyword> <values> \n valid keywords : search, list, gettag"
+		print usage()
 	elif len_sys_argv == 3:
 		regurl = sys.argv[1:][0]
 		keyword = sys.argv[1:][1]
@@ -75,6 +74,6 @@ if __name__ == "__main__":
 			list_all = get_all_repo_dict(regurl, get_all_repos(regurl))
 			print decorate_list(list_all)
 		else:
-			print "Usage: browser.py <registry_endpoint> <keyword> <values> \n valid keywords : search, list, gettag"
+			print usage()
 
 
