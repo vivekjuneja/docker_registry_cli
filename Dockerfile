@@ -2,6 +2,12 @@ FROM python:latest
 
 MAINTAINER vivekjuneja@gmail.com
 
-pip install -r requirements.txt
 
-CMD ["python",  
+WORKDIR /data
+COPY * /data/
+
+RUN pip install -r requirements.txt
+
+ENTRYPOINT ["python", "browser.py"]
+
+
