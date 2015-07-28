@@ -32,4 +32,11 @@ eg:-
 `python browser.py 192.168.59.103:5000 list all`
 
 
+To use the Dockerfile, refer to the following examples :-
+
+1. `docker build -t <imagename> .`
+
+2. `docker run -p 5000:5000 -d <imagename>  192.168.59.103:5000 search busybox`
+
+
 
