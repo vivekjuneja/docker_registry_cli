@@ -5,12 +5,11 @@ To use, run the latest Docker Registry Distribution from https://github.com/dock
 
 **Usage:-**
 
-
 `python browser.py <REGISTRY_ENDPOINT> <keyword> <options>`
 
-`<REGISTRY_ENDPOINT> : <IP_ADDRESS_DOCKER_REGISTRY>:<PORT>` eg: 192.168.59.103:5000
+REGISTRY_ENDPOINT : `<IP_ADDRESS_DOCKER_REGISTRY>:<PORT>` eg: 192.168.59.103:5000
 
-<keyword> :
+keyword :
 
 + *search* - allows searching for Docker Images. Supports partial search. No RegEx Support yet. 
 
