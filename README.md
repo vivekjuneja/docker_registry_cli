@@ -13,7 +13,7 @@ REGISTRY_ENDPOINT : <IP_ADDRESS_DOCKER_REGISTRY>:<PORT> eg: 192.168.59.103:5000
 
 Keyword:-
 
-1. search - allows searching for Docker Images. Supports partial search. No RegEx Support yet. 
++ *search* - allows searching for Docker Images. Supports partial search. No RegEx Support yet. 
 
 eg:-
 
@@ -26,7 +26,7 @@ eg:-
 `python browser.py 192.168.59.103:5000 search jenkins`
 
 
-2. list - lists all the Docker images available in the Image Registry with their respective tags 
++ *list* - lists all the Docker images available in the Image Registry with their respective tags 
 
 eg:- 
 
