@@ -78,7 +78,7 @@ Examples:-
 `Tags: v2`
 
 
-New Support for SSL and Authenticated Docker Registry
+**New Support for SSL and Authenticated Docker Registry**
 
 Non-Auth and Non-SSL
 
