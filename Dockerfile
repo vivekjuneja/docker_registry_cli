@@ -8,4 +8,4 @@ COPY requirements.txt /usr/src/app/
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY browser.py /usr/src/app/browser.py
-CMD [ "python", "./browser.py" ]
+ENTRYPOINT [ "python", "./browser.py" ]
