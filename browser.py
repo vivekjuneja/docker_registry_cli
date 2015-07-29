@@ -15,18 +15,22 @@ def search_for_repo(url, repo_search_name) :
 
 	repo_array = get_all_repos(url);
 
+	repo_dict_search = {}
+
 	if repo_search_name in repo_array:
 		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo_search_name)
-		print parsed_repo_tag_req_resp
+		repo_dict_search[repo_search_name] = parsed_repo_tag_req_resp
 	else:
 		''' Get all the repos '''
 		repo_dict = get_all_repo_dict(url, repo_array) 
-		if any(key.startswith(repo_search_name) for key in repo_dict) ==  True:
+		print any(key.startswith(repo_search_name) for key in repo_dict)
+		if any(False if key.find(repo_search_name)==-1 else True for key in repo_dict) ==  True:
 			print "available options:- " 
 			for key in repo_dict:
-				if(key.startswith(repo_search_name)):
-					print key + " : " + str(get_tags_for_repo(url, key))
-
+				if(key.find(repo_search_name)!=-1):
+					repo_dict_search[key] = get_tags_for_repo(url, key)
+					
+	return repo_dict_search
 
 def get_tags_for_repo(url, repo):
 	repo_tags_url = "http://" + url + "/v2/" + repo  + "/tags/list"
@@ -69,7 +73,7 @@ if __name__ == "__main__":
 		repo_to_search = sys.argv[1:][2]
 
 		if keyword=="search":
-			search_for_repo(regurl, repo_to_search)
+			print decorate_list(search_for_repo(regurl, repo_to_search))
 		elif keyword=="list":
 			list_all = get_all_repo_dict(regurl, get_all_repos(regurl))
 			print decorate_list(list_all)
