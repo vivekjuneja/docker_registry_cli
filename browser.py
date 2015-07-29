@@ -47,7 +47,7 @@ def get_all_repo_dict(url, repo_array):
 def decorate_list(repo_dict):
 	decorated_list_values = ""
  	for repo_key in repo_dict:
- 		decorated_list_values =  "Name: " + repo_key
+ 		decorated_list_values +=  "\n-----------" + "\nName: " + repo_key
  		decorated_list_values += "\nTags: "
 
  		for tag in repo_dict[repo_key]:
