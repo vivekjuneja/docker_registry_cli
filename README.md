@@ -45,21 +45,36 @@ Examples:-
 `$ docker run docker_reg_search 192.168.59.103:5002 list all`
 
 `-----------`
+
 `Name: busybox`
+
 `Tags: v1	v2	latest`
+
 `-----------`
+
 `Name: busy`
+
 `Tags: v2`
+
 `-----------`
+
 `Name: jenkins`
+
 `Tags: latest`
+
 
 `$ docker run docker_reg_search 192.168.59.103:5002 search bus`
 
 `-----------`
+
 `Name: busybox`
+
 `Tags: v1	v2	latest`
+
 `-----------`
+
 `Name: busy`
+
 `Tags: v2`
+
 
