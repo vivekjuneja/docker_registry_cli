@@ -143,7 +143,18 @@ def decorate_list(repo_dict):
 
 
 def usage():
- 	return "Usage: browser.py <registry_endpoint> <keyword> <value> \n valid keywords : search, list, gettag"
+ 	return "Usage: browser.py <registry_endpoint> <keyword> <value> <option1> <option2>\
+ 	\nValid keywords : search, list \
+ 	\nValid values:- \
+ 	\nFor keyword search, use the value as the image name. For eg:- search redis\
+ 	\nFor keyword list, use the value 'all' without quotes to get a list of all the docker image repos. For eg:- list all\
+ 	\nYou can specify the option1 as 'auth' to allow username and password to be used for authenticating the docker registry. \
+ 	\nFor eg:- python browser.py uname:pwd@registry_endpoint:port search busybox auth\
+ 	\nIf you use SSL, then specify the option2 as 'ssl' and option1 as 'auth' to allow for SSL Authentication\
+ 	\nFor eg:- python browser.py uname:pwd@registry_endpoint:port search busybox auth ssl\
+ 	\nFor more information, visit:- https://github.com/vivekjuneja/docker_registry_cli/"
+
+
 
 if __name__ == "__main__":
 	len_sys_argv = len(sys.argv[1:])
