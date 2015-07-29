@@ -55,14 +55,15 @@ def decorate_list(repo_dict):
 	if(len(repo_dict)==0):
 		return "No results!"
 		
-
+	counter = 1;
  	for repo_key in repo_dict:
- 		decorated_list_values +=  "\n-----------" + "\nName: " + repo_key
+ 		decorated_list_values +=  "\n-----------" + "\n" + str(counter) + ") Name: " + repo_key
  		decorated_list_values += "\nTags: "
-
+ 		counter+=1;
  		for tag in repo_dict[repo_key]:
  			decorated_list_values += tag + '\t'
  	
+ 	decorated_list_values += "\n\n" + str(counter-1) + " images found !"
  	return decorated_list_values
 
 def usage():
