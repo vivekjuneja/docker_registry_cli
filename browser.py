@@ -23,12 +23,13 @@ def search_for_repo(url, repo_search_name) :
 	else:
 		''' Get all the repos '''
 		repo_dict = get_all_repo_dict(url, repo_array) 
-		print any(key.startswith(repo_search_name) for key in repo_dict)
+
 		if any(False if key.find(repo_search_name)==-1 else True for key in repo_dict) ==  True:
 			print "available options:- " 
 			for key in repo_dict:
 				if(key.find(repo_search_name)!=-1):
 					repo_dict_search[key] = get_tags_for_repo(url, key)
+
 					
 	return repo_dict_search
 
@@ -50,13 +51,19 @@ def get_all_repo_dict(url, repo_array):
 
 def decorate_list(repo_dict):
 	decorated_list_values = ""
+ 	
+	if(len(repo_dict)==0):
+		return "No results!"
+		
+	counter = 1;
  	for repo_key in repo_dict:
- 		decorated_list_values +=  "\n-----------" + "\nName: " + repo_key
+ 		decorated_list_values +=  "\n-----------" + "\n" + str(counter) + ") Name: " + repo_key
  		decorated_list_values += "\nTags: "
-
+ 		counter+=1;
  		for tag in repo_dict[repo_key]:
  			decorated_list_values += tag + '\t'
  	
+ 	decorated_list_values += "\n\n" + str(counter-1) + " images found !"
  	return decorated_list_values
 
 def usage():
