@@ -23,12 +23,13 @@ def search_for_repo(url, repo_search_name) :
 	else:
 		''' Get all the repos '''
 		repo_dict = get_all_repo_dict(url, repo_array) 
-		if any(key.startswith(repo_search_name) for key in repo_dict) ==  True:
+		print any(key.startswith(repo_search_name) for key in repo_dict)
+		if any(False if key.find(repo_search_name)==-1 else True for key in repo_dict) ==  True:
 			print "available options:- " 
 			for key in repo_dict:
-				if(key.startswith(repo_search_name)):
+				if(key.find(repo_search_name)!=-1):
 					repo_dict_search[key] = get_tags_for_repo(url, key)
-					'''print key + " : " + str(get_tags_for_repo(url, key))'''
+					
 	return repo_dict_search
 
 def get_tags_for_repo(url, repo):
