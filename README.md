@@ -40,26 +40,26 @@ To use the Dockerfile, refer to the following examples :-
 
 Examples:- 
 
-$ docker build -t docker_reg_search .
+`$ docker build -t docker_reg_search .`
 
-$ docker run docker_reg_search 192.168.59.103:5002 list all
+`$ docker run docker_reg_search 192.168.59.103:5002 list all`
 
------------
-Name: busybox
-Tags: v1	v2	latest
------------
-Name: busy
-Tags: v2
------------
-Name: jenkins
-Tags: latest
+`-----------`
+`Name: busybox`
+`Tags: v1	v2	latest`
+`-----------`
+`Name: busy`
+`Tags: v2`
+`-----------`
+`Name: jenkins`
+`Tags: latest`
 
-$ docker run docker_reg_search 192.168.59.103:5002 search bus
+`$ docker run docker_reg_search 192.168.59.103:5002 search bus`
 
------------
-Name: busybox
-Tags: v1	v2	latest
------------
-Name: busy
-Tags: v2
+`-----------`
+`Name: busybox`
+`Tags: v1	v2	latest`
+`-----------`
+`Name: busy`
+`Tags: v2`
 
