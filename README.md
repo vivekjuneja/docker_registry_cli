@@ -78,3 +78,7 @@ Examples:-
 `Tags: v2`
 
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vivekjuneja/docker_registry_cli/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
