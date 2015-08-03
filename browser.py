@@ -8,6 +8,7 @@ requests.packages.urllib3.disable_warnings()
 def get_reqistry_request(url, auth=False, username=None, password=None, ssl=False):
 
 
+
 	if ssl==True:
 		proto="https://"
 	else:
@@ -142,6 +143,81 @@ def decorate_list(repo_dict):
  	return decorated_list_values
 
 
+
+'''
+Decorates the search results to be printed on the screen
+'''
+def decorate_list_html(repo_dict, regurl):
+	decorated_list_values = "<html><head><title>Gravity Docker Registry Listing</title>\
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script> \
+	<link rel='stylesheet' type='text/css' href='/css/browser_web.css'></head> \
+	<body><h1>Gravity M0 Private Docker Registry Listing</h1> \
+    <div id='users'>\
+  <input class='search' placeholder='Search' />\
+  <button class='sort' data-sort='name'>\
+    Sort by name </button>"
+ 	
+	if(len(repo_dict)==0):
+		decorated_list_values += "<p><h2>No results!</h2></p></body></html>"
+		return decorated_list_values
+		
+	counter = 1;
+	decorated_list_values += "<p><ul class='list'>"
+
+ 	for repo_key in repo_dict:
+		decorated_list_values += "<li><h2 class='name'>"  + str(counter) + ". " + repo_key +"</h2>"
+ 		counter+=1;
+ 		for tag in repo_dict[repo_key]:
+ 			decorated_list_values += "<p class='born'><b>[" + tag + "]</b>: docker pull " + regurl + "/" + repo_key + ":" + tag + "</p><br />"
+ 		decorated_list_values += "</li>"
+ 	
+
+ 	decorated_list_values += "</ul>";
+ 	'''decorated_list_values += "<p><h2>" +  + " images found !" + "</h2></p>"'''
+ 	decorated_list_values += "<script>var options = { valueNames: [ 'name', 'born' ]}; var userList = new List('users', options);</script></body></html>"
+ 	
+ 	return decorated_list_values
+
+
+
+
+'''
+Decorates the search results to be printed on the screen
+'''
+def decorate_list_html_2(repo_dict):
+	decorated_list_values = "<html><head><title>Gravity Docker Registry Listing</title>\
+	<script src='//cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script></head> \
+	<style> ul { list-style-type: none; padding: 0px; margin: 0px;   display: inline; list-style:none; } \
+	ul li {  display: inline; } \
+	ul li:after { content: \", \";} \
+	li:last-child:after { content: \"\"; } \
+	table, td, th { border: 1px solid green; } th { background-color: green; color: white; } \
+	</style> \
+    <body><h1>Gravity M0 Private Docker Registry Listing</h1>"
+ 	
+	if(len(repo_dict)==0):
+		decorated_list_values += "<p><h2>No results!</h2></p></body></html>"
+		return decorated_list_values
+		
+	counter = 1;
+	decorated_list_values += "<p><table border='1'><tr><th>Number</th><th>Name</th><th>Tags</th></tr>"
+
+ 	for repo_key in repo_dict:
+ 		'''decorated_list_values +=  "\n-----------" + "\n" + str(counter) + ") Name: " + repo_key'''
+		decorated_list_values += "<tr><td>" + str(counter) + "</td><td>" + repo_key +"</td>"
+ 		decorated_list_values += "<td><ul>"
+ 		counter+=1;
+ 		for tag in repo_dict[repo_key]:
+ 			decorated_list_values += "<li>" + tag + "</li>"
+ 		decorated_list_values += "</td></tr>"
+ 	
+
+ 	decorated_list_values += "</table></p><p><h2>" + str(counter-1) + " images found !" + "</h2></p>"
+ 	decorated_list_values += "</body></html>"
+ 	
+ 	return decorated_list_values
+
+
 def usage():
  	return "Usage: browser.py <registry_endpoint> <keyword> <value> <option1> <option2>\
  	\nValid keywords : search, list \
@@ -198,6 +274,6 @@ if __name__ == "__main__":
 			print usage()
 			sys.exit(1)
 
-		print decorate_list(search_results)
+		print decorate_list_html(search_results, regurl)
 
 
