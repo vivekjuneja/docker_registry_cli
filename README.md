@@ -78,3 +78,17 @@ Examples:-
 `Tags: v2`
 
 
+**New Support for SSL and Authenticated Docker Registry**
+
+Non-Auth and Non-SSL
+
+`python browser.py 192.168.59.103:5000 search busy`
+
+Auth and Non-SSL
+
+`python browser.py exampleuser:exampleuser@192.168.59.103:443 search busybox auth
+
+Auth and SSL
+
+`python browser.py exampleuser:exampleuser@192.168.59.103:443 search mobile busybox ssl`
+
