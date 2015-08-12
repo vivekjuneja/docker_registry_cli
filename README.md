@@ -2,6 +2,16 @@
 
 Docker Registry CLI - Currently ONLY Supports the Search capability via Catalog API in the new version of Docker Registry v2. 
 
+Features :-
+
+1. List all the repos available on Registry
+2. Search repo name
+3. Supports HTTPS and Basic Auth enabled Docker Registry
+
+Coming soon :-
+
+1. Docker Registry Web UI for performing Search (available in the branch release as of now)
+
 To use, run the latest Docker Registry Distribution from https://github.com/docker/distribution. The CLI uses the Catalog API available through /v2/_catalog in the new development version of Docker Registry.
 
 **Usage:-**
