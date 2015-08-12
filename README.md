@@ -92,3 +92,6 @@ Auth and SSL
 
 `python browser.py exampleuser:exampleuser@192.168.59.103:443 search mobile busybox ssl`
 
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vivekjuneja/docker_registry_cli/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
