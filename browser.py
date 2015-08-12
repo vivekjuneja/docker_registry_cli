@@ -3,7 +3,7 @@ import requests
 import sys
 
 ''' Disable Warnings when using verify=False'''
-requests.packages.urllib3.disable_warnings()
+'''requests.packages.urllib3.disable_warnings()'''
 
 def get_reqistry_request(url, username=None, password=None, ssl=False):
 
@@ -157,10 +157,10 @@ def decorate_list(repo_dict):
 Decorates the search results to be printed on the screen
 '''
 def decorate_html(repo_dict, regurl):
-	decorated_list_values = "<html><head><title>Gravity Docker Registry Listing</title>\
+	decorated_list_values = "<html><head><title>Docker Registry Listing</title>\
 	<script src='http://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script> \
 	<link rel='stylesheet' type='text/css' href='/css/browser_web.css'></head> \
-	<body><h1>Gravity M0 Private Docker Registry Listing</h1> \
+	<body><h1>Docker Registry Listing</h1> \
     <div id='users'>\
   <input class='search' placeholder='Search' />\
   <button class='sort' data-sort='name'>\
