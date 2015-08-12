@@ -5,7 +5,7 @@ import sys
 ''' Disable Warnings when using verify=False'''
 requests.packages.urllib3.disable_warnings()
 
-def get_reqistry_request(url, auth=False, username=None, password=None, ssl=False):
+def get_reqistry_request(url, username=None, password=None, ssl=False):
 
 
 	if ssl==True:
@@ -15,56 +15,67 @@ def get_reqistry_request(url, auth=False, username=None, password=None, ssl=Fals
 
 	url_endpoint = proto + url
 
-	if auth==False:
-		req = requests.get(url_endpoint)
-	else:	
-		s = requests.Session()
+	s = requests.Session()
+	if(username!=None):
 		s.auth = (username, password)
-		req = s.get(url_endpoint, verify=False)
+
+	req = s.get(url_endpoint, verify=False)
 
 	return req
 
 
 
-def get_registry_catalog_request(url, auth=False, username=None, password=None, ssl=False):
+def get_registry_catalog_request(url, username=None, password=None, ssl=False):
 
 	requrl = url+"/v2/_catalog"
 
-	req = get_reqistry_request(requrl, auth, username, password, ssl)
+	req = get_reqistry_request(requrl, username, password, ssl)
 	
 	return req
 
 
-def get_registry_tag_request(url, repo, auth=False, username=None, password=None, ssl=False):
+def get_registry_tag_request(url, repo, username=None, password=None, ssl=False):
 	
 	requrl = url + "/v2/" + repo  + "/tags/list"
 
-	req = get_reqistry_request(requrl, auth, username, password, ssl)
+	req = get_reqistry_request(requrl, username, password, ssl)
 
 	return req
 
 
-def extract_url(url, auth):
-	if auth==False:
+'''
+Extracts the username and password from the url specified in case of Basic Authentication
+enabled for a Docker registry
+
+Example:-
+
+If the url specified is like exampleuser:exampleuser@docker_registry_host:port 
+
+then, the username is exampleuser, password is exampleuser and url is docker_registry_host:port
+'''
+def extract_url(url):
+
+	uname_pwd_delimeter=":"
+	auth_ip_delimeter="@"
+	position_ip_delimeter=url.find(auth_ip_delimeter)
+
+	if position_ip_delimeter==-1:
 		return None, None, url
-	else:
-		uname_pwd_delimeter=":"
+	else:	
 		delimiter_uname_pwd_pos = url.find(uname_pwd_delimeter)
-		auth_ip_delimeter="@"
-		delimeter_auth_ip_pos = url.find(auth_ip_delimeter)
+		delimeter_auth_ip_pos = position_ip_delimeter
 		username = url[:delimiter_uname_pwd_pos]
 		password = url[delimiter_uname_pwd_pos+1:delimeter_auth_ip_pos]
 		url_endpoint = url[delimeter_auth_ip_pos+1:]
 
-		
 		return username, password, url_endpoint
 
 
-def get_all_repos(url, auth=False, ssl=False):
+def get_all_repos(url, ssl=False):
 	
-	username, password, url_endpoint = extract_url(url, auth)
+	username, password, url_endpoint = extract_url(url)
 
-	req = get_registry_catalog_request(url_endpoint, auth, username, password, ssl)
+	req = get_registry_catalog_request(url_endpoint, username, password, ssl)
 
 	parsed_json = json.loads(req.text)
 
@@ -74,34 +85,34 @@ def get_all_repos(url, auth=False, ssl=False):
 
 
 
-def search_for_repo(url, repo_search_name, auth=False, ssl=False) :
+def search_for_repo(url, repo_search_name, ssl=False) :
 
-	repo_array = get_all_repos(url, auth, ssl);
+	repo_array = get_all_repos(url, ssl);
 	
 	repo_dict_search = {}
 
 	if repo_search_name in repo_array:
-		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo_search_name, auth, ssl)
+		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo_search_name, ssl)
 		repo_dict_search[repo_search_name] = parsed_repo_tag_req_resp
 	else:
 		''' Get all the repos '''
-		repo_dict = get_all_repo_dict(url, repo_array, auth, ssl) 
+		repo_dict = get_all_repo_dict(url, repo_array, ssl) 
 
 		if any(False if key.find(repo_search_name)==-1 else True for key in repo_dict) ==  True:
 			print "available options:- " 
 			for key in repo_dict:
 				if(key.find(repo_search_name)!=-1):
-					repo_dict_search[key] = get_tags_for_repo(url, key, auth, ssl)
+					repo_dict_search[key] = get_tags_for_repo(url, key, ssl)
 
 					
 	return repo_dict_search
 
 
-def get_tags_for_repo(url, repo, auth=False, ssl=False):
+def get_tags_for_repo(url, repo, ssl=False):
 	
-	username, password, url_endpoint = extract_url(url, auth)
+	username, password, url_endpoint = extract_url(url)
 
-	repo_tag_url_req = get_registry_tag_request(url_endpoint, repo, auth, username, password, ssl)
+	repo_tag_url_req = get_registry_tag_request(url_endpoint, repo, username, password, ssl)
 
 
 	parsed_repo_tag_req_resp = json.loads(repo_tag_url_req.text)
@@ -112,10 +123,10 @@ def get_tags_for_repo(url, repo, auth=False, ssl=False):
 '''
 Gets the entire repository dictionary
 '''
-def get_all_repo_dict(url, repo_array, auth=False, ssl=False):
+def get_all_repo_dict(url, repo_array,ssl=False):
 	repo_dict = {}
 	for repo in repo_array:
- 		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo, auth, ssl)
+ 		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo, ssl)
  		repo_dict[repo] = parsed_repo_tag_req_resp
 
  	return repo_dict
@@ -142,16 +153,50 @@ def decorate_list(repo_dict):
  	return decorated_list_values
 
 
+'''
+Decorates the search results to be printed on the screen
+'''
+def decorate_html(repo_dict, regurl):
+	decorated_list_values = "<html><head><title>Gravity Docker Registry Listing</title>\
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/list.js/1.1.1/list.min.js'></script> \
+	<link rel='stylesheet' type='text/css' href='/css/browser_web.css'></head> \
+	<body><h1>Gravity M0 Private Docker Registry Listing</h1> \
+    <div id='users'>\
+  <input class='search' placeholder='Search' />\
+  <button class='sort' data-sort='name'>\
+    Sort by name </button>"
+ 	
+	if(len(repo_dict)==0):
+		decorated_list_values += "<p><h2>No results!</h2></p></body></html>"
+		return decorated_list_values
+		
+	counter = 1;
+	decorated_list_values += "<p><ul class='list'>"
+
+ 	for repo_key in repo_dict:
+		decorated_list_values += "<li><h2 class='name'>"  + str(counter) + ". " + repo_key +"</h2>"
+ 		counter+=1;
+ 		for tag in repo_dict[repo_key]:
+ 			decorated_list_values += "<p class='born'><b>[" + tag + "]</b>: docker pull " + regurl + "/" + repo_key + ":" + tag + "</p><br />"
+ 		decorated_list_values += "</li>"
+ 	
+
+ 	decorated_list_values += "</ul>";
+ 	'''decorated_list_values += "<p><h2>" +  + " images found !" + "</h2></p>"'''
+ 	decorated_list_values += "<script>var options = { valueNames: [ 'name', 'born' ]}; var userList = new List('users', options);</script></body></html>"
+ 	
+ 	return decorated_list_values
+
+
 def usage():
- 	return "Usage: browser.py <registry_endpoint> <keyword> <value> <option1> <option2>\
+ 	return "Usage: browser.py <registry_endpoint> <keyword> <value> <ssl>\
  	\nValid keywords : search, list \
  	\nValid values:- \
  	\nFor keyword search, use the value as the image name. For eg:- search redis\
  	\nFor keyword list, use the value 'all' without quotes to get a list of all the docker image repos. For eg:- list all\
- 	\nYou can specify the option1 as 'auth' to allow username and password to be used for authenticating the docker registry. \
- 	\nFor eg:- python browser.py uname:pwd@registry_endpoint:port search busybox auth\
- 	\nIf you use SSL, then specify the option2 as 'ssl' and option1 as 'auth' to allow for SSL Authentication\
- 	\nFor eg:- python browser.py uname:pwd@registry_endpoint:port search busybox auth ssl\
+ 	\nFor eg:- python browser.py uname:pwd@registry_endpoint:port search busybox\
+ 	\nIf you use SSL, then specify 'ssl'\
+ 	\nFor eg:- python browser.py uname:pwd@registry_endpoint:port search busybox ssl\
  	\nFor more information, visit:- https://github.com/vivekjuneja/docker_registry_cli/"
 
 
@@ -164,40 +209,35 @@ if __name__ == "__main__":
 		print usage()
 
 	elif len_sys_argv >= 3:
-		
-		regurl = sys.argv[1:][0]
-		keyword = sys.argv[1:][1]
-		repo_to_search = sys.argv[1:][2]
-		auth_flag =False
+		commandlineargs = sys.argv[1:]
+		regurl = commandlineargs[0]
+		keyword = commandlineargs[1]
+		repo_to_search = commandlineargs[2]
 		ssl_flag  = False
 
-		if len_sys_argv == 3:	
-			auth_flag = False
-		elif len_sys_argv == 4:	
-			auth = sys.argv[1:][3]
-			if auth == "auth":
-				auth_flag = True
-			ssl = False
-		elif len_sys_argv == 5: 
-			auth = sys.argv[1:][3]
-			ssl = sys.argv[1:][4]
-			if auth=="auth":
-				auth_flag = True
-			if ssl=="ssl":
+		if len_sys_argv == 4:	
+			ssl = commandlineargs[3]
+			if ssl == "ssl":
 				ssl_flag = True
-	
+		
 
 		search_results = None
 
 		if keyword=="search":
-			search_results = search_for_repo(regurl, repo_to_search, auth_flag, ssl_flag)
+			search_results = search_for_repo(regurl, repo_to_search, ssl_flag)
+			print decorate_list(search_results)
 		elif keyword=="list":
-			all_repos = get_all_repos(regurl, auth_flag, ssl_flag)
-			search_results = get_all_repo_dict(regurl, all_repos, auth_flag, ssl_flag)
+			all_repos = get_all_repos(regurl, ssl_flag)
+			search_results = get_all_repo_dict(regurl, all_repos, ssl_flag)
+			print decorate_list(search_results)
+		elif keyword=="html":
+			all_repos = get_all_repos(regurl, ssl_flag)
+			search_results = get_all_repo_dict(regurl, all_repos, ssl_flag)
+			print decorate_html(search_results, regurl)
 		else:
 			print usage()
 			sys.exit(1)
 
-		print decorate_list(search_results)
+		
 
 
