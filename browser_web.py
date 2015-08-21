@@ -3,18 +3,10 @@ import subprocess
 from flask import Flask
 app = Flask(__name__, static_folder='css')
 
-@app.route('/gravity/docker/registry')
+@app.route('/registry/search')
 def get_docker_registry():
 
-    p = subprocess.Popen(['python', 'browser.py', '10.52.179.121:9443', 'html', 'all', 'ssl'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = p.communicate()
-    return out
-
-
-@app.route('/gravity/components')
-def hello_world():
-
-    p = subprocess.Popen(['python', 'browser.py', '10.52.179.121:9443', 'html', 'all', 'ssl'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    p = subprocess.Popen(['python', 'browser.py', 'localhost:9443', 'html', 'all', 'ssl'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()
     return out
 
@@ -25,4 +17,4 @@ def send_js(path):
 	return send_from_directory(app.static_folder, path)
 
 if __name__ == '__main__':
-    app.run(host='10.52.179.181', port=9001)
+    app.run(host='localhost', port=9001)
