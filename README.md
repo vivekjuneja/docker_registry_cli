@@ -11,7 +11,7 @@ Features :-
 
 Docker Registry search under 1 minute :-
 
-<script type="text/javascript" src="https://asciinema.org/a/d1n97bbb21a7pdrzjmhfwk6ef.js" id="asciicast-d1n97bbb21a7pdrzjmhfwk6ef" async></script>
+[![asciicast](https://asciinema.org/a/d1n97bbb21a7pdrzjmhfwk6ef.png)](https://asciinema.org/a/d1n97bbb21a7pdrzjmhfwk6ef)
 
 
 Prerequisities :-
