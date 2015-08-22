@@ -123,7 +123,7 @@ Usage :-
 `python browser_web.py localhost`
 `python browser_web.py localhost ssl`
 
-Now, access the UI at http://localhost:9001/registry/search
+Now, access the UI at `http://localhost:9001/registry/search`
 
 Screenshot :-
 
