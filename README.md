@@ -22,28 +22,28 @@ Prerequisities :-
 
 1. To use the CLI :- 
 
-`python browser.py <REGISTRY_ENDPOINT> <keyword> <options>`
+  `python browser.py <REGISTRY_ENDPOINT> <keyword> <options>`
 
-REGISTRY_ENDPOINT : `<IP_ADDRESS_DOCKER_REGISTRY>:<PORT>` eg: localhost:5000
+  REGISTRY_ENDPOINT : `<IP_ADDRESS_DOCKER_REGISTRY>:<PORT>` eg: localhost:5000
 
-keyword :
+  keyword :
 
-+ *search* - allows searching for Docker Images. Supports partial search. No RegEx Support yet. 
+  + *search* - allows searching for Docker Images. Supports partial search. No RegEx Support yet. 
 
-eg:-
+  eg:-
 
-`python browser.py localhost:5000 search busybox`
+    `python browser.py localhost:5000 search busybox`
 
-`python browser.py localhost:5000 search busy`
+    `python browser.py localhost:5000 search busy`
 
-`python browser.py localhost:5000 search bu`
+    `python browser.py localhost:5000 search bu`
 
 
-+ *list* - lists all the Docker images available in the Image Registry with their respective tags 
+  + *list* - lists all the Docker images available in the Image Registry with their respective tags 
 
-eg:- 
-
-`python browser.py localhost:5000 list all`
+  eg:- 
+  
+    `python browser.py localhost:5000 list all`
 
 
 To use the Dockerfile, refer to the following examples :-
