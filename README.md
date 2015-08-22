@@ -19,7 +19,7 @@ Prerequisities :-
 
 `python browser.py <REGISTRY_ENDPOINT> <keyword> <options>`
 
-REGISTRY_ENDPOINT : `<IP_ADDRESS_DOCKER_REGISTRY>:<PORT>` eg: 192.168.59.103:5000
+REGISTRY_ENDPOINT : `<IP_ADDRESS_DOCKER_REGISTRY>:<PORT>` eg: localhost:5000
 
 keyword :
 
@@ -27,65 +27,67 @@ keyword :
 
 eg:-
 
-`python browser.py 192.168.59.103:5000 search busybox`
+`python browser.py localhost:5000 search busybox`
 
-`python browser.py 192.168.59.103:5000 search busy`
+`python browser.py localhost:5000 search busy`
 
-`python browser.py 192.168.59.103:5000 search bu`
+`python browser.py localhost:5000 search bu`
 
 
 + *list* - lists all the Docker images available in the Image Registry with their respective tags 
 
 eg:- 
 
-`python browser.py 192.168.59.103:5000 list all`
+`python browser.py localhost:5000 list all`
 
 
 To use the Dockerfile, refer to the following examples :-
 
 1. `docker build -t <imagename> .`
 
-2. `docker run -p 5000:5000 -d <imagename>  192.168.59.103:5000 search busybox`
+2. `docker run -p 5000:5000 -d <imagename>  localhost:5000 search busybox`
 
 Examples:- 
 
-`$ docker build -t docker_reg_search .`
+```
+$ docker build -t docker_reg_search .
 
-`$ docker run docker_reg_search 192.168.59.103:5002 list all`
+$ docker run docker_reg_search localhost:5002 list all
 
-`-----------`
+-----------
 
-`Name: busybox`
+Name: busybox
 
-`Tags: v1	v2	latest`
+Tags: v1	v2	latest
 
-`-----------`
+-----------
 
-`Name: busy`
+Name: busyy
 
-`Tags: v2`
+Tags: v2
 
-`-----------`
+-----------
 
-`Name: jenkins`
+Name: jenkins
 
-`Tags: latest`
+Tags: latest
 
 
-`$ docker run docker_reg_search 192.168.59.103:5002 search bus`
+$ docker run docker_reg_search 192.168.59.103:5002 search bus
 
-`-----------`
+-----------
 
-`Name: busybox`
+Name: busybox
 
-`Tags: v1	v2	latest`
+Tags: v1	v2	latest
 
-`-----------`
+-----------
 
-`Name: busy`
+Name: busy
 
-`Tags: v2`
+Tags: v2
 
+```
 
 **New Support for SSL and Authenticated Docker Registry**
 
