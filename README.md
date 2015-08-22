@@ -4,17 +4,18 @@ Docker Registry CLI - Currently ONLY Supports the Search capability via Catalog 
 
 Features :-
 
-1. List all the repos available on Registry
-2. Search repo name
+1. List all the repos available on Docker Registry
+2. Search for repositories
 3. Supports HTTPS and Basic Auth enabled Docker Registry
+4. Added support for Search Web UI
 
-Coming soon :-
+Prerequisities :-
 
-1. Docker Registry Web UI for performing Search (available in the branch release as of now)
-
-To use, run the latest Docker Registry Distribution from https://github.com/docker/distribution. The CLI uses the Catalog API available through /v2/_catalog in the new development version of Docker Registry.
+1. Download the new Docker Registry 2.1+ that supports Catalog API
 
 **Usage:-**
+
+1. To use the CLI :- 
 
 `python browser.py <REGISTRY_ENDPOINT> <keyword> <options>`
 
@@ -31,8 +32,6 @@ eg:-
 `python browser.py 192.168.59.103:5000 search busy`
 
 `python browser.py 192.168.59.103:5000 search bu`
-
-`python browser.py 192.168.59.103:5000 search jenkins`
 
 
 + *list* - lists all the Docker images available in the Image Registry with their respective tags 
@@ -90,21 +89,35 @@ Examples:-
 
 **New Support for SSL and Authenticated Docker Registry**
 
-Non-Auth and Non-SSL
+If the Docker registry is only authenticated via SSL
 
-`python browser.py 192.168.59.103:5000 search busy`
+`python browser.py localhost:5000 search busy ssl`
+`python browser.py localhost:5000 list all ssl`
 
-Auth and Non-SSL
+If the Docker registry is authenticated by Username and Password, but not via SSL
 
-`python browser.py exampleuser:exampleuser@192.168.59.103:443 search busybox auth
+`python browser.py exampleuser:exampleuser@localhost:443 search busybox`
+`python browser.py exampleuser:exampleuser@localhost:5000 list all`
 
-Auth and SSL
+If the Docker registry is authenticated by both Username:Password, and SSL 
 
-`python browser.py exampleuser:exampleuser@192.168.59.103:443 search mobile busybox ssl`
+`python browser.py exampleuser:exampleuser@localhost:443 search mobile ssl`
+`python browser.py exampleuser:exampleuser@localhost:5000 list all ssl`
+
+Please note that currently the python script does not verify the SSL Certificate. It also does not suppress the SSL warning. The `ssl` flag is only used to toggle the URL protocol as https. 
+
 
 **Docker Search Browser UI added**
 
+The `browser_web.py` script provides a Web UI to search the Docker Registry. 
+
+Usage :-
+
+`python browser_web.py localhost`
 `python browser_web.py localhost ssl`
+
+Screenshot :-
+
 ![](images/screenshot1.jpg?raw=true)
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vivekjuneja/docker_registry_cli/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
