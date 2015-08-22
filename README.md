@@ -9,6 +9,11 @@ Features :-
 3. Supports HTTPS and Basic Auth enabled Docker Registry
 4. Added support for Search Web UI
 
+Docker Registry search under 1 minute :-
+
+[![asciicast](https://asciinema.org/a/d1n97bbb21a7pdrzjmhfwk6ef.png)](https://asciinema.org/a/d1n97bbb21a7pdrzjmhfwk6ef)
+
+
 Prerequisities :-
 
 1. Download the new Docker Registry 2.1+ that supports Catalog API
