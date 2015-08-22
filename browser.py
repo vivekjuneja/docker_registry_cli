@@ -8,6 +8,8 @@ import sys
 def get_reqistry_request(url, username=None, password=None, ssl=False):
 
 
+	req = None
+
 	if ssl==True:
 		proto="https://"
 	else:
@@ -19,7 +21,10 @@ def get_reqistry_request(url, username=None, password=None, ssl=False):
 	if(username!=None):
 		s.auth = (username, password)
 
-	req = s.get(url_endpoint, verify=False)
+	try:
+		req = s.get(url_endpoint, verify=False)
+	except requests.ConnectionError:
+		print 'Cannot connect to Registry'	
 
 	return req
 
@@ -77,9 +82,11 @@ def get_all_repos(url, ssl=False):
 
 	req = get_registry_catalog_request(url_endpoint, username, password, ssl)
 
-	parsed_json = json.loads(req.text)
-
-	repo_array = parsed_json['repositories']
+	if(req!=None):
+		parsed_json = json.loads(req.text)
+		repo_array = parsed_json['repositories']
+	else:
+		return None
 
 	return repo_array
 
@@ -125,9 +132,10 @@ Gets the entire repository dictionary
 '''
 def get_all_repo_dict(url, repo_array,ssl=False):
 	repo_dict = {}
-	for repo in repo_array:
- 		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo, ssl)
- 		repo_dict[repo] = parsed_repo_tag_req_resp
+	if (repo_array!=None):
+		for repo in repo_array:
+	 		parsed_repo_tag_req_resp = get_tags_for_repo(url, repo, ssl)
+	 		repo_dict[repo] = parsed_repo_tag_req_resp
 
  	return repo_dict
 
