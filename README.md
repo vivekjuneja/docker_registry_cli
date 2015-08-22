@@ -73,7 +73,7 @@ Name: jenkins
 Tags: latest
 
 
-$ docker run docker_reg_search 192.168.59.103:5002 search bus
+$ docker run docker_reg_search localhost:5002 search bus
 
 -----------
 
