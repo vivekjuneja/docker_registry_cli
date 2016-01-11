@@ -1,3 +1,5 @@
+<a href="https://codeclimate.com/github/vivekjuneja/docker_registry_cli"><img src="https://codeclimate.com/github/vivekjuneja/docker_registry_cli/badges/gpa.svg" /></a>
+
 # docker_registry_cli
 
 Docker Registry CLI - Currently ONLY Supports the Search capability via Catalog API in the new version of Docker Registry v2. 
