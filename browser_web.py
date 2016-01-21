@@ -20,7 +20,7 @@ def send_js(path):
 	return send_from_directory(app.static_folder, path)
 
 def usage():
-	 return "Usage: browser_web.py <registry_endpoint> <ssl>"
+	 return "Usage: browser_web.py <registry_endpoint> <ssl> <ui_url> <ui_port>"
 
 
 if __name__ == '__main__':
@@ -32,5 +32,8 @@ if __name__ == '__main__':
 	else:
 		registry_endpoint = commandlineargs[0]
 		ssl = commandlineargs[1]
-		print registry_endpoint, ssl
-		app.run(host='localhost', port=9001)
+		ui_url = commandlineargs[2]
+		ui_port = commandlineargs[3]
+		print 'registry endpoint to use : ' + registry_endpoint, ssl
+		print 'starting registry ui at : ' + ui_url + ":" + ui_port
+		app.run(host=ui_url, port=int(ui_port))
