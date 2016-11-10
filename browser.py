@@ -82,11 +82,13 @@ def get_all_repos(url, ssl=False):
 
 	req = get_registry_catalog_request(url_endpoint, username, password, ssl)
 
+	repo_array = None
+	parsed_json = None
+
 	if(req!=None):
 		parsed_json = json.loads(req.text)
+	if('repositories' in parsed_json):
 		repo_array = parsed_json['repositories']
-	else:
-		return None
 
 	return repo_array
 
