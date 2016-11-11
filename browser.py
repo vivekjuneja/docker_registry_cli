@@ -62,13 +62,12 @@ def extract_url(url):
 
 	uname_pwd_delimeter=":"
 	auth_ip_delimeter="@"
-	position_ip_delimeter=url.find(auth_ip_delimeter)
-
-	if position_ip_delimeter==-1:
+	
+	if url.find(auth_ip_delimeter)==-1:
 		return None, None, url
-	else:	
+	else:
 		delimiter_uname_pwd_pos = url.find(uname_pwd_delimeter)
-		delimeter_auth_ip_pos = position_ip_delimeter
+		delimeter_auth_ip_pos = url.find(auth_ip_delimeter, delimiter_uname_pwd_pos)
 		username = url[:delimiter_uname_pwd_pos]
 		password = url[delimiter_uname_pwd_pos+1:delimeter_auth_ip_pos]
 		url_endpoint = url[delimeter_auth_ip_pos+1:]
