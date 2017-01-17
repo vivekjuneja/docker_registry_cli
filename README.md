@@ -131,5 +131,7 @@ Screenshot :-
 
 ![](images/screenshot1.jpg?raw=true)
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/vivekjuneja/docker_registry_cli/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+## Licensing
+MIT see [LICENSE][] for the full license text.
 
+   [LICENSE]: https://github.com/vivekjuneja/docker_registry_cli/blob/master/LICENSE.txt
